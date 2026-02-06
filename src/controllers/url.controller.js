@@ -4,7 +4,9 @@ import { nanoid } from "nanoid";
 
 
 export const dashboard = async (req, res) => {
-    const urls = await URL.find({ user: req.user._id });
+    
+    console.log("LOGGED USER:", req.user);
+    const urls = await URL.find({ user: req.user.id });
     res.render("dashboard", {
   urls,
   user: req.user,
@@ -18,7 +20,7 @@ export const createShortUrl = async (req, res) => {
     await URL.create({
         shortId: nanoid(8),
         originalURL: req.body.url,
-        user: req.user._id
+        user: req.user.id
     });
     res.redirect("/dashboard");
 }
