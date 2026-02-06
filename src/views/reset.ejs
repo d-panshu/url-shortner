@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reset Password</title>
+</head>
+<body>
+
+  <h2>Reset Password</h2>
+
+  <% if (typeof error !== "undefined") { %>
+    <p style="color:red;"><%= error %></p>
+  <% } %>
+
+  <form method="POST">
+    <!-- POST goes to same /auth/reset/:token URL -->
+    <input
+      type="password"
+      name="password"
+      placeholder="Enter new password"
+      required
+    />
+    <button type="submit">Reset Password</button>
+  </form>
+
+</body>
+</html>

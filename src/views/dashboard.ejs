@@ -1,0 +1,50 @@
+<h2>Dashboard</h2>
+
+<p>Role: <%= user.role %></p>
+
+<% if (user.role === "admin") { %>
+  <p>
+    <a href="/admin">Admin Panel</a>
+  </p>
+<% } %>
+
+<form method="POST" action="/shorten">
+  <input
+    name="url"
+    placeholder="Enter original URL"
+    required
+  />
+  <button type="submit">Shorten</button>
+</form>
+
+<hr/>
+
+<ul>
+  <% urls.forEach(u => { %>
+    <li>
+      <a href="/<%= u.shortId %>" target="_blank">
+        <%= request.headers.host %>/<%= u.shortId %>
+      </a>
+
+      &nbsp;→&nbsp;
+      <span><%= u.clicks %> clicks</span>
+
+      <!-- DELETE BUTTON -->
+      <form
+        method="POST"
+        action="/delete/<%= u._id %>"
+        style="display:inline"
+      >
+        <button type="submit">Delete</button>
+      </form>
+    </li>
+  <% }) %>
+</ul>
+
+
+
+<hr/>
+
+<form method="POST" action="/auth/logout">
+  <button type="submit">Logout</button>
+</form>

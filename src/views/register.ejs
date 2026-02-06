@@ -1,0 +1,7 @@
+<h2>Signup</h2>
+<% if (error) { %><p style="color:red;"><%= error %></p><% } %>
+<form method="POST">
+  <input name="email" required />
+  <input name="password" type="password" required />
+  <button>Signup</button>
+</form>

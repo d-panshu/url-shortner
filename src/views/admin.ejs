@@ -1,0 +1,15 @@
+<h2>Admin Dashboard</h2>
+
+<h3>Users</h3>
+<ul>
+  <% users.forEach(u => { %>
+    <li><%= u.email %> — <%= u.role %></li>
+  <% }) %>
+</ul>
+
+<h3>URLs</h3>
+<ul>
+  <% urls.forEach(u => { %>
+    <li><%= u.shortId %> → <%= u.originalUrl %></li>
+  <% }) %>
+</ul>
