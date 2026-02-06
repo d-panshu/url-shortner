@@ -1,15 +1,62 @@
-<h2>Admin Dashboard</h2>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+  <style>
+    body { font-family: Arial; background: #222; color: #fff; padding: 20px; }
+    table { width: 100%; background: #333; border-collapse: collapse; }
+    th, td { padding: 10px; border-bottom: 1px solid #555; }
+    button { cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<h2>👑 Admin Dashboard</h2>
+<a href="/dashboard">← Back</a>
 
 <h3>Users</h3>
-<ul>
-  <% users.forEach(u => { %>
-    <li><%= u.email %> — <%= u.role %></li>
-  <% }) %>
-</ul>
+<table>
+  <tr>
+    <th>Email</th>
+    <th>Role</th>
+  </tr>
 
-<h3>URLs</h3>
-<ul>
-  <% urls.forEach(u => { %>
-    <li><%= u.shortId %> → <%= u.originalUrl %></li>
+  <% users.forEach(u => { %>
+    <tr>
+      <td><%= u.email %></td>
+      <td><%= u.role %></td>
+    </tr>
   <% }) %>
-</ul>
+</table>
+
+<hr>
+
+<h3>All URLs</h3>
+<table>
+  <tr>
+    <th>Short</th>
+    <th>Original</th>
+    <th>Clicks</th>
+    <th>Action</th>
+  </tr>
+
+  <% urls.forEach(u => { %>
+    <tr>
+      <td>
+        <a href="/<%= u.shortId %>" target="_blank">
+          <%= u.shortId %>
+        </a>
+      </td>
+      <td><%= u.originalUrl %></td>
+      <td><%= u.clicks %></td>
+      <td>
+        <form method="POST" action="/admin/delete/<%= u._id %>">
+          <button>Delete</button>
+        </form>
+      </td>
+    </tr>
+  <% }) %>
+</table>
+
+</body>
+</html>

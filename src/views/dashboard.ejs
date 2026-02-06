@@ -1,50 +1,62 @@
-<h2>Dashboard</h2>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <style>
+    body { font-family: Arial; background: #f5f5f5; padding: 20px; }
+    .card { background: #fff; padding: 20px; border-radius: 8px; }
+    .url { display: flex; justify-content: space-between; margin: 8px 0; }
+    button { cursor: pointer; }
+    .admin { background: #000; color: #fff; padding: 8px; }
+  </style>
+</head>
+<body>
 
-<p>Role: <%= user.role %></p>
+<div class="card">
+  <h2>Welcome 👋</h2>
+  <p><b>Role:</b> <%= user.role %></p>
 
-<% if (user.role === "admin") { %>
-  <p>
-    <a href="/admin">Admin Panel</a>
-  </p>
-<% } %>
+  <% if (user.role === "admin") { %>
+    <a class="admin" href="/admin">Admin Panel</a>
+  <% } %>
 
-<form method="POST" action="/shorten">
-  <input
-    name="url"
-    placeholder="Enter original URL"
-    required
-  />
-  <button type="submit">Shorten</button>
-</form>
+  <hr>
 
-<hr/>
+  <h3>Create Short URL</h3>
+  <form method="POST" action="/shorten">
+    <input name="url" placeholder="https://example.com" required>
+    <button>Create</button>
+  </form>
 
-<ul>
+  <hr>
+
+  <h3>Your URLs</h3>
+
+  <% if (urls.length === 0) { %>
+    <p>No URLs yet</p>
+  <% } %>
+
   <% urls.forEach(u => { %>
-    <li>
-      <a href="/<%= u.shortId %>" target="_blank">
-        <%= request.headers.host %>/<%= u.shortId %>
-      </a>
+    <div class="url">
+      <div>
+        <a href="/<%= u.shortId %>" target="_blank">
+          <%= u.shortId %>
+        </a>
+        — <%= u.clicks %> clicks
+      </div>
 
-      &nbsp;→&nbsp;
-      <span><%= u.clicks %> clicks</span>
-
-      <!-- DELETE BUTTON -->
-      <form
-        method="POST"
-        action="/delete/<%= u._id %>"
-        style="display:inline"
-      >
-        <button type="submit">Delete</button>
+      <form method="POST" action="/delete/<%= u._id %>">
+        <button>❌ Delete</button>
       </form>
-    </li>
+    </div>
   <% }) %>
-</ul>
 
+  <hr>
 
+  <form method="POST" action="/auth/logout">
+    <button>Logout</button>
+  </form>
+</div>
 
-<hr/>
-
-<form method="POST" action="/auth/logout">
-  <button type="submit">Logout</button>
-</form>
+</body>
+</html>
